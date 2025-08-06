@@ -5,8 +5,6 @@
 mod input;
 mod output;
 
-pub mod mock;
-
 /// Represents an input switch, such as a button or a switch
 pub trait InputSwitch {
     type Error;
