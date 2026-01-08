@@ -4,6 +4,32 @@
 
 mod input;
 mod output;
+mod wait;
+
+/// Represents an input switch, such as a button or a switch
+pub trait WaitSwitch {
+    type Error;
+
+    /// Returns true if the switch has been activated, otherwise false
+    /// i.e. if a button is currently pressed, returns true
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use switch_hal::mock;
+    /// # use embedded_hal::digital::PinState;
+    /// use switch_hal::{WaitSwitch, InputSwitch, OutputSwitch, Switch, IntoSwitch, StatefulOutputSwitch};
+    /// # let pin = mock::Pin::with_state(PinState::High);
+    /// # let mut status_led = mock::Pin::new().into_active_high_switch();
+    /// let mut button = pin.into_active_low_switch();
+    /// match button.wait_active().await {
+    ///     Ok(()) => { status_led.toggle().ok(); }
+    ///     Err(_) => { panic!("Failed to read button state"); }
+    /// }
+    /// ```
+    #[allow(async_fn_in_trait)]
+    async fn wait_active(&mut self) -> Result<(), Self::Error>;
+}
 
 /// Represents an input switch, such as a button or a switch
 pub trait InputSwitch {

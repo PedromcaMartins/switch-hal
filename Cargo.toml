@@ -1,6 +1,6 @@
 [package]
 name = "switch-hal"
-version = "0.4.0"
+version = "0.5.0"
 authors = ["Christopher J. McClellan <chris.mcclellan203@gmail.com>"]
 edition = "2018"
 description = "HAL and basic implementations for input and output switches (buttons, switches, leds, transistors)"
@@ -19,6 +19,9 @@ exclude = [
 [dependencies.embedded-hal]
 version = "1.0.0"
 
+[dependencies.embedded-hal-async]
+version = "1.0.0"
+
 [dev-dependencies.embedded-hal-mock]
 version = "0.11.1"
 default-features = false
@@ -26,3 +29,7 @@ features = [
     "eh1",
     "embedded-hal-async",
 ]
+
+[dev-dependencies.async-std]
+version = "1.13"
+features = ["attributes"]

@@ -74,3 +74,34 @@ mod input_pin {
         switch.into_pin().done();
     }
 }
+
+mod wait_pin {
+    use super::*;
+    use switch_hal::WaitSwitch;
+
+    #[async_std::test]
+    async fn active_high() {
+        let expectations = [
+            PinTransaction::wait_for_state(PinState::High),
+        ];
+
+        let pin = PinMock::new(&expectations);
+
+        let mut switch = pin.into_active_high_switch();
+        switch.wait_active().await.unwrap();
+        switch.into_pin().done();
+    }
+
+    #[async_std::test]
+    async fn active_low() {
+        let expectations = [
+            PinTransaction::wait_for_state(PinState::Low),
+        ];
+
+        let pin = PinMock::new(&expectations);
+
+        let mut switch = pin.into_active_low_switch();
+        switch.wait_active().await.unwrap();
+        switch.into_pin().done();
+    }
+}
